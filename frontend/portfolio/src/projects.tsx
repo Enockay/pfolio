@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import  webtweet from "./assets/webtweet.png"
 import websystem from "./assets/websystem.png"
+import Edumax from "./assets/Edumax.jpeg"
+
 type Project = {
   id: number;
   title: string;
@@ -35,6 +37,17 @@ const projects: Project[] = [
     imageUrl: webtweet,
     liveDemo : 'https://webtweets.vercel.app',
     githubUrl: 'https://github.com/Enockay/webtweets',
+  },
+  {
+    id: 2,
+    title: 'Edumax',
+    description: 'Edumax is a comprehensive school management system designed to streamline various administrative and academic tasks. The system is built using modern web technologies and provides a robust platform for managing student information, teacher portals, and parent access to student results.',
+    techStack: ['React', 'Node.js', 'chat.js', 'Tailwind CSS',"TypeScript", 'Express','MongoDB'],
+    challenges: 'Intergrating the  the two portals for teachers and for the  parents ',
+    solutions: 'After Thara research i managed to interlink both the  portals but shairing one server to be one in a saas form',
+    imageUrl: Edumax,
+    liveDemo : 'https://etim.vercel.app/login',
+    githubUrl: 'https://github.com/Enockay/Edumax',
   },
   // Add more projects here...
 ];
