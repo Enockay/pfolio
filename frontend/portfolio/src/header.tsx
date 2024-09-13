@@ -25,9 +25,9 @@ const PortfolioHeader: React.FC = () => {
                         className="w-64 h-64 rounded-full object-cover border-4 border-blue-500 shadow-lg mb-4"
                     />
                     <h2 className="text-3xl font-bold text-gray-900">Enock Mwema</h2>
-                    <p className="md:text-lg text-sm font-light text-gray-600">Full Stack Developer | React, Node.js, TypeScript</p>
-                    <p className="md:text-sm text-xs font-light text-gray-500">Co-Founder BlackieNetworks</p>
-                    <p className="md:text-sm text-xs font-light text-gray-500">Based in Chuka, Kenya | Open to Remote Work</p>
+                    <p className="md:text-lg text-sm font-light text-gray-900">Full Stack Developer | React, Node.js, TypeScript</p>
+                    <p className="md:text-sm text-sm font-light text-gray-900">Co-Founder BlackieNetworks</p>
+                    <p className="md:text-sm text-sm font-light text-gray-900">Based in Chuka, Kenya | Open to Remote Work</p>
                 </div>
 
                 {/* Vision and Contact Section */}

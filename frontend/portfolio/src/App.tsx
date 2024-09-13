@@ -2,6 +2,7 @@
 import PortfolioHeader from './header';
 import Introduction from './introduction';
 import SkillsSection from './skills';
+import ProjectShowcase from './projects';
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <PortfolioHeader />
       <Introduction />
       <SkillsSection />
+      <ProjectShowcase/>
     </div>
   );
 }
