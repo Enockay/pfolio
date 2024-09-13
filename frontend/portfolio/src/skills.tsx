@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-
-// Skill logos (replace with actual paths)
+import React, { useState, useRef } from 'react';
+import { useIntersectionObserver } from './useIntersectionObserver';
 import reactLogo from './assets/react.png';
 import typescriptLogo from './assets/typescript.jpeg';
 import tailwindLogo from './assets/tailwind.jpeg';
@@ -56,15 +55,25 @@ const skills: Skill[] = [
 
 const SkillsSection: React.FC = () => {
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
+  const { ref, isVisible } = useIntersectionObserver();
+  const skillRef = useRef<HTMLDivElement | null>(null);
 
   const handleSkillClick = (skill: Skill) => {
     setSelectedSkill(prevSkill => (prevSkill?.name === skill.name ? null : skill));
+    if (skillRef.current) {
+      skillRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (
-    <section className="bg-gradient-to-r from-blue-500 to-indigo-600 md:py-12 py-4 md:px-4 px-2">
+    <section
+      ref={ref}
+      className={`bg-gray-600 transition-colors duration-500 ease-in-out py-5 px-3 mt-5 shadow-lg rounded-lg 
+      ${isVisible ? 'animate-slideIn' : 'opacity-0'}
+      `}
+    >
       <div className="w-full mx-auto">
-        <h3 className="md:text-3xl text-2xl font-extrabold text-white mb-8 text-center tracking-wider transition duration-500">
+        <h3 className="md:text-2xl text-2xl font-extrabold text-white mb-8 text-center tracking-wider transition duration-500">
           Technical Skills 🚀
         </h3>
 
@@ -73,18 +82,46 @@ const SkillsSection: React.FC = () => {
           {skills.map((skill) => (
             <div
               key={skill.index}
-              className={`flex-shrink-0 md:p-4 p-3 rounded-lg cursor-pointer transition-all duration-500 ease-in-out shadow-lg transform hover:scale-110
-                ${selectedSkill?.name === skill.name ? 'bg-indigo-700 text-white' : 'bg-white text-gray-900'}`}
+              className={`relative flex-shrink-0 md:p-4 p-3 rounded-lg cursor-pointer transition-transform transform hover:scale-110
+                ${selectedSkill?.name === skill.name ? 'bg-indigo-700 text-white' : 'bg-white text-gray-900'}
+              `}
               onClick={() => handleSkillClick(skill)}
               aria-expanded={selectedSkill?.name === skill.name}
+              style={{
+                perspective: '1000px', // Flip effect perspective
+              }}
             >
-              <div className="flex items-center space-x-4">
-                <img
-                  src={skill.logo}
-                  alt={`${skill.name} logo`}
-                  className="md:w-14 md:h-14 w-5 h-5 rounded-full object-cover border-2 border-gray-300"
-                />
-                <h3 className="text-lg font-semibold">{skill.name}</h3>
+              <div
+                className={`relative flex items-center space-x-4 transform transition-transform duration-700 ${
+                  selectedSkill?.name === skill.name ? 'rotate-y-180' : ''
+                }`}
+                style={{
+                  transformStyle: 'preserve-3d', // Ensure 3D space for flip
+                }}
+              >
+                {/* Front Side */}
+                <div
+                  className="flex items-center justify-center md:w-14 md:h-14 w-10 h-10 rounded-full object-cover border-2 border-gray-300"
+                  style={{
+                    backfaceVisibility: 'hidden', // Hide back side when flipped
+                  }}
+                >
+                  <img
+                    src={skill.logo}
+                    alt={`${skill.name} logo`}
+                    className="rounded-full"
+                  />
+                </div>
+                {/* Back Side */}
+                <div
+                  className="absolute inset-0 flex items-center justify-center bg-white text-gray-900"
+                  style={{
+                    backfaceVisibility: 'hidden', // Hide front side when flipped
+                    transform: 'rotateY(180deg)', // Back side rotation
+                  }}
+                >
+                  <h3 className="text-lg font-semibold">{skill.name}</h3>
+                </div>
               </div>
             </div>
           ))}
@@ -93,10 +130,11 @@ const SkillsSection: React.FC = () => {
         {/* Description Box */}
         {selectedSkill && (
           <div
+            ref={skillRef}
             className={`mt-8 w-full bg-white p-6 shadow-lg rounded-lg transform transition-transform duration-500 ease-in-out 
               ${selectedSkill ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
           >
-            <h4 className="text-2xl font-bold text-gray-900 mb-2">{selectedSkill.name}</h4>
+            <h4 className="md:text-2xl text-xl font-bold text-blue-950 mb-2">{selectedSkill.name}</h4>
             <p className="text-gray-950 leading-relaxed">{selectedSkill.description}</p>
           </div>
         )}
